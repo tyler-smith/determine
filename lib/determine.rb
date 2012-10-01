@@ -8,7 +8,6 @@ module Determine;end
 
 $:.unshift File.dirname(__FILE__)
 require 'determine/exceptions/determination_exception'
-
 require 'determine/web_page'
 require 'determine/determination'
 require 'determine/determiner'

@@ -26,7 +26,7 @@ module Determine
         self.class.determinations.keys.each do |key|
           data[key] = begin
             self.determine(key)
-          rescue Determine::Exceptions::DeterminationException
+          rescue Exception
             nil
           end
         end
