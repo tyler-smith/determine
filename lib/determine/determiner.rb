@@ -21,6 +21,18 @@ module Determine
 
     # Pass the webpage to the hander and have it get to work
     def determine(determ)
+      if determ.to_sym == :all
+        data = {}
+        self.class.determinations.keys.each do |key|
+          data[key] = begin
+            self.determine(key)
+          rescue Determine::Exceptions::DeterminationException
+            nil
+          end
+        end
+        return data
+      end
+
       self.class.determinations[determ.to_sym].determine(@page)
     end
   end
