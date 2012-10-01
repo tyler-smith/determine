@@ -1,3 +1,2 @@
 module Determine::Exceptions;end
-
-Dir["#{__FILE__}/../exceptions/*.rb"].each { |f| require f }
+Dir[File.join(File.dirname(__FILE__), 'exceptions', '*.rb')].each { |f| require f }

@@ -6,4 +6,4 @@ require 'nokogiri'
 module Determine;end
 
 $:.unshift File.dirname(__FILE__)
-Dir["#{__FILE__}/../*.rb"].each { |f| require f }
+Dir[File.join(File.dirname(__FILE__), 'determine', '*.rb')].each { |f| require f }
