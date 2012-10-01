@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.description = 'Allows you to build classes that brute force determinations from text'
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {harness}/*`.split("\n")
   s.require_paths = ['lib']
 
   s.add_runtime_dependency 'nokogiri'
