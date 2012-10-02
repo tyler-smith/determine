@@ -23,17 +23,19 @@ module Determine
     def determine(determ)
       if determ.to_sym == :all
         data = {}
+        
         self.class.determinations.keys.each do |key|
-          data[key] = begin
-            self.determine(key)
-          rescue Exception
-            nil
-          end
+          data[key] = self.determine(key) rescue nil
         end
+
         return data
       end
 
-      self.class.determinations[determ.to_sym].determine(@page)
+      begin
+        self.class.determinations[determ.to_sym].determine(@page)
+      rescue NoMethodError
+        raise "Determination #{determ.to_sym} not found"
+      end
     end
   end
 end
