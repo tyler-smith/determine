@@ -19,7 +19,10 @@ module Determine
     end
 
     def raw_source
-      @raw_source ||= @uri.read
+      # Force the string to only use correct UTF-8 characters
+      @raw_source ||= begin
+        Iconv.new('UTF-8//IGNORE', 'UTF-8').iconv(@uri.read + ' ')[0..-2]
+      end
     end
   end
 end

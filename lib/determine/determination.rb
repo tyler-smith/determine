@@ -7,11 +7,11 @@ module Determine
 
     # Takes the text and tries each handler on it until we get a determination
     # TODO: in future extend this to allow multiple determinations
-    def determine(page)
+    def determine(page, *args)
       raise "No provided methods" if handlers.nil? || handlers.empty?
 
       handlers.each do |handler|
-        result = self.send(handler, page)
+        result = self.send(handler, page, *args)
         return result if result
       end
 
