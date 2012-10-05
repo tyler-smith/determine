@@ -9,8 +9,8 @@ module Determine
       # DSL-esque call for adding determinations
       # determ is the name e.g. :business_name
       # handler is a Determination subclass that does the work
-      def determination(determ, handler)
-        determinations[determ] = handler.new
+      def determination(determ, handler, *args)
+        determinations[determ] = {:handler => handler.new, :args => args}
       end
     end
 
@@ -20,7 +20,7 @@ module Determine
     end
 
     # Pass the webpage to the hander and have it get to work
-    def determine(determ, *args)
+    def determine(determ)
       if determ.to_sym == :all
         data = {}
         
@@ -32,8 +32,11 @@ module Determine
       end
 
       determiner = self.class.determinations[determ.to_sym]
-      return determiner.determine(@page, *args) unless determiner.nil?
-      raise "Determination #{determ.to_sym} not found"
+      raise "Determination #{determ.to_sym} not found" if determiner.nil?
+
+      args = determiner[:args].map{|arg| self.determine(arg) }
+
+      return determiner[:handler].determine(@page, *args)
     end
   end
 end
