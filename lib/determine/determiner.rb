@@ -14,9 +14,9 @@ module Determine
       end
     end
 
-    def initialize(uri)
+    def initialize(uri, html_cache=nil)
       # Get page; lazily parsed
-      @page = WebPage.new(uri)
+      @page = WebPage.new(uri, html_cache)
     end
 
     # Pass the webpage to the hander and have it get to work
