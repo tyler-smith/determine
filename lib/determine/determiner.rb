@@ -14,9 +14,11 @@ module Determine
       end
     end
 
-    def initialize(uri, html_cache=nil)
+    def initialize(text, cache=nil)
+      return unless text =~ URI.regexp
+
       # Get page; lazily parsed
-      @page = WebPage.new(uri, html_cache)
+      @page = WebPage.new(text, cache) if text =~ URI.regexp
     end
 
     # Pass the webpage to the hander and have it get to work
