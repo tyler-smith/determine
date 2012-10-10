@@ -18,7 +18,7 @@ module Determine
       return unless text =~ URI.regexp
 
       # Get page; lazily parsed
-      @page = WebPage.new(text, cache) if text =~ URI.regexp
+      @page = WebPage.new(text, cache)
     end
 
     # Pass the webpage to the hander and have it get to work
@@ -37,7 +37,6 @@ module Determine
       raise "Determination #{determ.to_sym} not found" if determiner.nil?
 
       args = determiner[:args].map{|arg| self.determine(arg) } + args
-
       return determiner[:handler].determine(@page, *args)
     end
   end
