@@ -20,7 +20,7 @@ module Determine
     end
 
     # Pass the webpage to the hander and have it get to work
-    def determine(determ)
+    def determine(determ, *args)
       if determ.to_sym == :all
         data = {}
         
@@ -34,7 +34,7 @@ module Determine
       determiner = self.class.determinations[determ.to_sym]
       raise "Determination #{determ.to_sym} not found" if determiner.nil?
 
-      args = determiner[:args].map{|arg| self.determine(arg) }
+      args = determiner[:args].map{|arg| self.determine(arg) } + args
 
       return determiner[:handler].determine(@page, *args)
     end
