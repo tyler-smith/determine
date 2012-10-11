@@ -15,10 +15,16 @@ module Determine
     end
 
     def initialize(text, cache=nil)
-      return unless text =~ URI.regexp
+      if text =~ URI.regexp
+        @page = WebPage.new(text, cache)
+      else
+        text_with_forced_scheme = "http://#{text}"
 
-      # Get page; lazily parsed
-      @page = WebPage.new(text, cache)
+        if text_with_forced_scheme =~ URI.regexp
+          text = text_with_forced_scheme
+          @page = WebPage.new(text, cache)
+        end
+      end
     end
 
     # Pass the webpage to the hander and have it get to work
@@ -27,7 +33,7 @@ module Determine
         data = {}
         
         self.class.determinations.keys.each do |key|
-          data[key] = self.determine(key) rescue nil
+          data[key] = self.determine(key)
         end
 
         return data
