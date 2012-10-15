@@ -6,6 +6,10 @@ module Determine
         @determinations ||= {}
       end
 
+      def available_determinations
+        determinations.keys
+      end
+
       # DSL-esque call for adding determinations
       # determ is the name e.g. :business_name
       # handler is a Determination subclass that does the work
